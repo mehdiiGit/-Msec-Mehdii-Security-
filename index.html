@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@500&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="images/encrypted.png" type="image/x-icon">
+    <title>Mehdii &bull; Security </title>
+</head>
+<body>
+    <nav id="nav">
+        <div class="left-side">
+            <div class="logo">
+                <h1>Msec</h1>
+            </div>
+        </div>
+        <div class="right-side">
+            <div class="links">
+                <ul id="menu" class="menu">
+                    <li><img src="images/close.png" width="32px" class="close-img" onclick="closefun()"></li>
+                    <li data-scroll-nav="0">Home</li>
+                    <li data-scroll-nav="1">Services</li>
+                    <li data-scroll-nav="2">About</li>
+                    <li data-scroll-nav="3">Contact</li>
+                    <li onclick="back()">Exit</li>
+                </ul>
+            </div>
+            <div class="menu-btn">
+                    <img src="images/menu.png" width="32px" class="menu-img" onclick="menu()">
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="icon" id="icon">
+            <img src="images/encrypted.png" width="50px">
+        </div>
+        <div class="touches">
+            <div class="d1"></div>
+            <div class="d2"></div>
+            <div class="d3"></div>
+            <div class="d4"></div>
+            <div class="d5"></div>
+            <div class="d6"></div>
+            <div class="d7"></div>
+            <div class="d8"></div>
+            <div class="d9"></div>
+        </div>
+        <div class="home" data-scroll-index="0" id="home">
+            <div class="part2">
+                <div class="left">
+                    <h1>Be</h1>
+                    <p> <b>Be protected before threats even reach you.</b>
+                        Upload your files or links and let our scanner analyze them instantly. 
+                        We help you take smart decisions with clear, accurate results so you stay
+                         a step ahead of any digital risk.
+                    </p>
+                </div>
+            </div>
+            <div class="part1">
+                <img src="images/encrypted.png">
+            </div>
+            <div class="part2">
+                <div class="right">
+                    <h1>Safe</h1>
+                    <p> <b>Stay safe with full-system awareness.</b>
+                        Our tools check your device for weaknesses, highlight vulnerabilities, and guide 
+                        you on how to fix them — ensuring a safer, stronger digital environment for you.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="services" data-scroll-index="1">
+                <div class="accrx" id="services1">
+                    <h1>Explore Our Services</h1>
+                </div>
+                <div class="getting" id="services2">
+                    <div class="service" id="s1">
+                        <img src="images/link.png">
+                        <h4>Links Scan</h4>
+                        <span>Verify URLs before you click to avoid malicious sites.</span>
+                        <p>get it</p>
+                    </div>
+                    <div class="service" id="s2">
+                        <img src="images/document.png">
+                        <h4>Files Scan</h4>
+                        <span>Instantly check any file for hidden threats.</span>
+                        <p>get it</p>
+                    </div>
+                    <div class="service" id="s3">
+                        <img src="images/data-breach.png">
+                        <h4>Device Scan</h4>
+                        <span>Detect weaknesses in your system and fix vulnerabilities.</span>
+                        <p>get it</p>
+                    </div>
+                </div>
+                <div class="Sdesc" id="services3">
+                    <p> Our platform provides a complete suite of security tools designed to protect
+                         you from every angle. From scanning files for hidden threats, to verifying
+                          suspicious links, to analyzing your device for vulnerabilities — we help
+                           you stay informed, secure, and one step ahead of cyber risks.
+                    </p>
+                </div>
+            </div>
+            <div class="about" data-scroll-index="2">
+                <div class="accrx" id="about1">
+                    <h1>About us</h1>
+                </div>
+                <div class="Adesc" id="about2">
+                    <p>
+                        <i><b>Msec</b></i> is a project initiated as part of the practical activities offered by
+                         <a href="https://www.ofppt.ma/" target="_blank">OFPPT</a> to trainees. this projects aim
+                          to put into practice the skills and knowledge acquired during the training, allowing 
+                          participants to improve and develop in a real environment, and so on. <i><b>Msec</b></i> 
+                          was created by the trainee <i><b data-scroll-nav="3">El Mehdi Alaoui</b></i>, and <b> supervised by:</b>
+                    </p>
+                </div>
+<!--                <div class="arrows">
+                    <img src="images/arrow2.png" class="left-img">
+                    <img src="images/arrow.png" class="right-img">
+                </div> -->
+                <div class="formatrices" id="about3">
+                    <div class="mme">
+                        <img src="images/utilisateur.png" width="90px">
+                        <h3>Mme Naima Zaki</h3>
+                        <p>Formatrice dans OFPPT Sidi Kacem</p>
+                        <b>More Info</b>
+                    </div>
+                    <div class="mme">
+                        <img src="images/utilisateur.png" width="90px">
+                        <h3>Mme Latifa Benzaza</h3>
+                        <p>Formatrice dans OFPPT Sidi Kacem</p>
+                        <b>More Info</b>
+                    </div>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ff0800" fill-opacity="1" d="M0,128L60,160C120,192,240,256,360,256C480,256,600,192,720,144C840,96,960,64,1080,80C1200,96,1320,160,1380,192L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+            </div>
+            <div class="contact" data-scroll-index="3" >
+                <div class="con" id="contact">
+                    <div class="leftCon">
+                        <div class="prImage">
+                            <img src="images/profile.jpg">
+                        </div>
+                    </div>
+                    <div class="rightCon">
+                        <div class="texts">
+                            <h1>El</h1>&emsp;<h1>Mehdi</h1>&emsp;<h1>Alaoui</h1>
+                            <h3>
+                                18 years old, creative, versatile, I obtained my baccalaureate in 
+                                mathematical sciences, French option, in 2025. I am now a trainee 
+                                at OFPPT Sidi Kacem in Digital Development, at the Specialized Technician
+                                 level.
+                            </h3>
+                        </div>
+                        <div class="cvbtn">
+                            <p onclick="cv()">Download CV</p>
+                        </div>
+                        <div class="Conlinks">
+                            <ul>
+                                <li><a href=""><img src="images/linkedin (2).png"></a></li>
+                                <li><a href=""><img src="images/instagram (1).png"></a></li>
+                                <li><a href=""><img src="images/github.png"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <div class="footer">
+                    <p><b>&copy; Msec, All rights reserved</b></p>
+                </div>
+            </footer>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>
