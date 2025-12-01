@@ -1,4 +1,3 @@
-//#################################### FRONT-END ####################################
 function back(){
     if(history.length > 1){
         history.back();
@@ -87,221 +86,27 @@ window.addEventListener('scroll',() =>{
         about3.style.animation = 'none';
     }
 });
-//#################################### BACK-END ####################################
-
-const API_KEY = 'b46685c7b70d5860f54df9489026a63e83c1acb1501a76c0263508986d1cd68e';
-
-const getElement = id => document.getElementById(id)
-
-const updateResult = (content, display = true) => {
-    const result = getElement('result');
-    result.style.display = display ? 'block' : 'none'
-    result.innerHTML = content;
-};
-
-const showLoading = message => updateResult(`
-    
-    <div class="loading">
-        <p>${message}</p>
-        <div class="spinner"></div> 
-    </div>
-    
-    `);
-
-const showError = message => updateResult(`<p class="error">${message}</p>`)
-
-
-async function makeRequest(url,options={}) {
-    const response = await fetch(url,{
-        ...options,
-        headers:{
-            'x-apikey': API_KEY,
-            ...options.headers
-        }
-    });
-    if(!response.ok){
-        const error = await response.json().catch(() => ({error: {message: response.statusText}}));
-        throw new Error(error.error?.message || 'Request Failed');
-    }
-    return response.json;
+function device(){
+    return 0;
 }
-
-async function scanURL() {
-    const url = getElement('urlInput').value.trim();
-    if (!url) return showError("Please Enter a URL");
-    try{
-        new URL(url);
-    }catch{
-        return showError('Please Enter a Valide URL (https://example.com)');
-    }
-    try{
-        showLoading('Submitting URL for scanning ... ')
-        const encodedUrl = encodeURIComponent(url);
-
-        const submitResult = await makeRequest("https://www.virustotal.com/api/v3/urls" , {
-            method: "POST",
-            headers: {
-                'accept': 'application/json',
-                'content-type': 'application/x-www-form-url-encoded'
-            },
-            body: `url=${encodedUrl}`
-        });
-        if(!submitResult.data?.id){
-            throw new  Error("Failed to get analysis ID")
-        }
-        await new Promise(resolve => setTimeout(resolve , 3000));
-        showLoading("Getting scan Results ...");
-        await pollAnalysisResults(submitResult.data.id)
-    }catch (error){
-        showError(`Error: ${error.message}`);
-    }
+function url(){
+    window.open("url_scan/index.html")
+    return 0;
 }
-
-
-async function scanFile() {
-    const file = getElement('fileInput').files[0];
-    if(!file) return showError('Please select a file !');
-    if(file.length > 32 * 1024 * 1024) return showError('File size exceeds 32MB limit.');
-    try{
-        showLoading("Uploading file ...");
-        const formData = new FormData();
-        formData.append("file",file);
-        const uploadResult = makeRequest("https://www.virustotal.com/api/v3/files" , {
-            method: "POST",
-            body: formData
-        });
-        if(!uploadResult.data?.id){
-            throw new Error("Faild to get file ID");
-        }
-        await new Promise(resolve => setTimeout(resolve , 3000))
-        showLoading("Getting Scan Results ...");
-        const analysisResult = makeRequest(`https://www.virustotal.com/api/v3/analyses/${uploadResult.data.id}`);
-        if(!analysisResult.data?.id){
-            throw new Error("Failed to get Analysis Results");
-        }
-        await pollAnalysisResults(analysisResult.data.id , file.name)
-    }catch(error){
-        showError(`Error: ${error.message}`);
-    }
+function file(){
+    window.open("file_scan/index.html")
+    return 0;
 }
 
 
 
-async function pollAnalysisResults(analysisId, fileName="") {
-    const maxAttempts = 20;
-    let attempts = 0;
-    let interval = 200;
-    while (attempts < maxAttempts){
-        try{
-            showLoading(`Analyzing${fileName ? `${fileName}`: ''}... (${((maxAttempts-attempts)*interval/1000).topFixed(0)}s remaining)`);
-            const report = await makeRequest(`https://www.virustotal.com/api/v3/analyses/${analysisId}`);
-            const status = report.data?.attributes?.status;
-            if(!status) throw new Error("Invalid analysis response");
-            if(status === "completed"){
-                showFormattedResult(report);
-                break;
-            }
-            if(status === "failed"){
-                throw new Error("Analysis Failed")
-            }
-            if(++attempts >= maxAttempts){
-                throw new Error("Analysis timeout - please try again");
-            }
-
-            interval = Math.min(interval * 1.5, 8000);
-            await new Promise(resolve => setTimeout(resolve,interval));
-        }catch(error){
-            showError(`Error: ${error.message}`);
-            break;
-        }
-    }
-}
 
 
-function showFormattedResult(data){
-    if(!data?.data?.attributes?.stats) return showError("Invalid Response Format !");
-    const stats = data.data.attributes.stats;
-    const total = Object.values(stats).reduce((sum,val) => sum + val, 0);
-    if(!total) return showError("No Analysis Results available");
-    const getPercent = val => ((val / total) * 100).toFixed(1);
-    const categories = {
-        malicious: { color: 'malicious', label: 'Malicious'},
-        suspicious: { color: 'suspicious', label: 'Suspicious'},
-        harmless: { color: 'safe', label: 'Safe'},
-        undetected: { color: 'undetected', label: 'Undetected'},
-    };
-    const percents = Object.keys(categories).reduce((acc,key) => {
-        acc[key] = getPercent(stats[key]);
-        return acc;
-    }, {});
-    const verdict = stats.malicious > 0 ? "Malicious" : stats.suspicious > 0 ? "Suspicious" : "Safe";
-    const verdictClass = stats.malicious > 0 ? "malicious" : stats.suspicious > 0 ? "suspicious" : "safe";
-    updateResult(`
-        <h3>Scan Report</h3>
-        <div class="scan-stats">
-            <p><strong>Verdict:</strong><span class="${verdictClass}">${verdict}</span></p>
-            <div class="progress-section">
-                <div class="progress-label">
-                    <span>Detection Results</span>
-                    <span class="progress-percent">${percents.malicious}% Detection Rate</span>
-                </div>
-                <div class="progress-stacked">
-                    ${Object.entries(categories).map(([key,{color, label}]) => `
-                        <div class="legend-item">
-                        <div class="legend-color ${color}"><span>
-                        <span>${label}(${percents[key]}%)</span>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>  
-            <div class="detection-details">
-                ${Object.entries(categories).map(([key,{color, label}]) => `
-                
-                    <div class="detailed-item ${color}">
-                        <span class="detailed-label">${label}</span>
-                        <span class="detailed-value">${stats[key]}</span>
-                        <span class="detailed-percent">${percents[key]}%</span>
-                    </div>
-                `).join("")}
-            </div>  
-        </div>    
-        <button onclick="showFullReport(this.getAttributte('data-report'))" data-report='${JSON.stringify(data)}'>View Full Report
-    `);
-    setTimeout(() => getElement('result').querySelector('.progress-stacked').classList.add("animate"), 1000); 
-}
 
 
-function showFullReport(reportData){
-    const data = typeof reportData === "string" ? JSON.parse(reportData) : reportData;
-    const modal = getElement('fullReportModal');
-    const result = data.data?.attributes?.results;
-    getElement('fullReportContent').innerHTML = `
-        <h3>Full Report Details</h3>
-        ${result ? `
-            <table>
-                <tr><th>Engine</th><th>Result</th></tr>
-                ${Object.entries(results).map(([engine, {category}]) => `
-                    <tr>
-                        <td>${engine}</td>
-                        <td class="${category === "malicious" ? "malicious" : category === "suspicious" ? "suspicious" : "safe"}">${category}</td>
-                    </tr>
-                `).join('')}
-            </table> 
-        ` : '<p>No detailed results available</p>'}
-    `;
-    modal.style.display = 'block';
-    modal.offsetHeight;
-    modal.classList.add("show");
-}
 
 
-const closeModal = () => {
-    const modal = getElement("fullReportModal");
-    modal.classList.remove("show");
-    setTimeout(() => modal.style.display = "none", 300);
-}
 
-window.addEventListener('load',() => {
-    const modal = getElement('fullReportModal');
-    window.addEventListener('click', e => e.target === modal && closeModal());
-});
+
+
+
