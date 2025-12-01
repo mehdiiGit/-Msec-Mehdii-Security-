@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../Sstyle.css">
+    <link rel="shortcut icon" href="../images/encrypted.png" type="image/x-icon">
+    <title>Msec | File Scan</title>
+</head>
+
+<body>
+    <nav>
+        <div class="left-side">
+            <div class="logo">
+            <h1>Msec</h1>
+            </div>
+        </div>
+        <div class="right-side">
+            <ul>
+                <li onclick="back()" class="Sback">Exit</li>
+            </ul>
+        </div>    
+    </nav>
+    <div class="container">
+        <div class="touches">
+            <div class="d1"></div>
+            <div class="d2"></div>
+            <div class="d3"></div>
+            <div class="d4"></div>
+            <div class="d5"></div>
+            <div class="d6"></div>
+            <div class="d7"></div>
+            <div class="d8"></div>
+            <div class="d9"></div>
+        </div>
+        <div class="accrx">
+            <h1>File</h1>&emsp;
+            <h1>Scanning</h1>
+        </div>
+        <div class="texts">
+            <h3>Click the Button in the bottom to choose the file you want to scan it. Remember, the file mustn't be larger than 32Mb</h3>
+            <h3>Enjor Our Service !!</h3>
+        </div>
+        <div class="scan-inp">
+            <input type="file" id="fileInput">
+            <button onclick="scanFile()">Scan File</button>
+        </div>
+        <div id="result"></div>
+        <div id="fullReportModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Full Report</h2>
+                <div id="fullReportContent"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../Sscript.js"></script>
+</body>
+
+</html>
