@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../Sstyle.css">
+    <link rel="shortcut icon" href="../images/encrypted.png" type="image/x-icon">
+    <title>Msec | URL Scan</title>
+</head>
+
+<body>
+    <nav>
+        <div class="left-side">
+            <div class="logo">
+            <h1>Msec</h1>
+            </div>
+        </div>
+        <div class="right-side">
+            <ul>
+                <li onclick="back()" class="Sback">Exit</li>
+            </ul>
+        </div>    
+    </nav>
+    <div class="container">
+        <div class="touches">
+            <div class="d1"></div>
+            <div class="d2"></div>
+            <div class="d3"></div>
+            <div class="d4"></div>
+            <div class="d5"></div>
+            <div class="d6"></div>
+            <div class="d7"></div>
+            <div class="d8"></div>
+            <div class="d9"></div>
+        </div>
+        <div class="accrx">
+            <h1>URL</h1>&emsp;
+            <h1>Scanning</h1>
+        </div>
+        <div class="texts">
+            <h3>Enter The URL you want to scan it, don't forget to put the full and the correct URL before clicking the button in the bottom</h3>
+            <h3>Enjor Our Service !!</h3>
+        </div>
+        <div class="scan-inp">
+            <input type="text" id="urlInput" placeholder="Enter URL (e.g., https://example.com)">
+            <button onclick="scanURL()">Scan URL</button>
+        </div>
+        <div id="result"></div>
+        <div id="fullReportModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Full Report</h2>
+                <div id="fullReportContent"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../Sscript.js"></script>
+
+</body>
+
+</html>
